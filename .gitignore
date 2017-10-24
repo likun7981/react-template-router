@@ -54,3 +54,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# build
+template/build
+
