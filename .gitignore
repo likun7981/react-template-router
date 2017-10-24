@@ -57,3 +57,6 @@ typings/
 # build
 template/build
 
+# lock
+package-lock.json
+
