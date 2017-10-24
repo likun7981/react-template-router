@@ -15,7 +15,7 @@ $ create-custom-react-app -t router <project-name>
 ```
 - With github 
 ```bash
-$ create-custom-react-app -t likun7981/react-template-router
+$ create-custom-react-app -t likun7981/react-template-router <project-name>
 ```
 
 
