@@ -29,9 +29,29 @@ store.injectAll(reducers);
 // some setup
 const MOUNT_NODE = document.getElementById('root');
 
-ReactDOM.render(
-  <App store={store} routes={routes} history={history} />,
-  MOUNT_NODE
-);
+let render = routes => {
+  ReactDOM.render(
+    <App store={store} routes={routes} history={history} />,
+    MOUNT_NODE
+  );
+};
+if (process.env.NODE_ENV === 'development') {
+  const { AppContainer } = require('react-hot-loader');
+  render = routes => {
+    ReactDOM.render(
+      <AppContainer>
+        <App store={store} routes={routes} history={history} />
+      </AppContainer>,
+      MOUNT_NODE
+    );
+  };
+}
 
+render(routes);
+
+if (module.hot) {
+  module.hot.accept('routes', () => {
+    render(require('routes').default(store));
+  });
+}
 registerServiceWorker();

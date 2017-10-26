@@ -27,8 +27,10 @@ class Bundle extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.load !== this.props.load) {
-      this.load(nextProps);
+    if (module.hot) {
+      setImmediate(() => {
+        this.load(nextProps);
+      });
     }
   }
 
@@ -70,7 +72,7 @@ class Bundle extends React.Component {
     }
     return (
       <Animate
-        component=''
+        component=""
         transitionAppear
         transitionName={{
           appear: 'animate-appear',

@@ -4,6 +4,7 @@ const rewireHost = require('react-app-rewire-host');
 const rewireDll = require('./rewire-dll');
 const rewireAlias = require('./rewire-alias');
 const rewireAntd = require('./rewire-antd');
+const rewireHotLoader = require('./rewire-hot-loader');
 
 module.exports = function(config, env) {
   config = rewireAlias(config);
@@ -16,5 +17,6 @@ module.exports = function(config, env) {
     test: 'http://example.test.com',
     pro: 'http://example.pro.com'
   });
+  config = rewireHotLoader(config, env);
   return config;
 };

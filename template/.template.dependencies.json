@@ -1,5 +1,5 @@
 {
-  "dependencies":{
+  "dependencies": {
     "antd": "^2.13.6",
     "qs": "^6.5.1",
     "rc-animate-v16": "^2.4.7",
@@ -21,6 +21,7 @@
     "react-app-rewire-less": "^2.0.7",
     "react-app-rewire-optimize": "^1.0.2",
     "react-app-rewired": "^1.3.1",
-    "react-scripts": "^1.0.14"
+    "react-scripts": "^1.0.14",
+    "react-hot-loader": "^3.1.1"
   }
 }
