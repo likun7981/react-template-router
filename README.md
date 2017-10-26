@@ -24,5 +24,5 @@ $ create-custom-react-app -t likun7981/react-template-router <project-name>
 Use git hooks, you should reinstall `husky` in work directory
 ```bash
 $ npm uninstall husky
-$ npm install husky --save-dev
+$ npm install husky
 ```
