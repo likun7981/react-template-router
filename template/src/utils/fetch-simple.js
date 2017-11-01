@@ -6,33 +6,47 @@ import { stringify } from 'qs';
  * @description: 
  *  This tool class can only be used to receive and process json data, 
  *  other data please use fetch native
+ * @Usage:
+ *  import request from 'fetch-simple';
+ *  const requestHandle = request('GET http://www.xxx.com',{param:1}).success(()=>{}).error(()=>{})
+ *  // You can cancel it 
+ *  requestHandle.abort();
+ *  // You want to config 
+ *  const reqest = request.withOption({ timeout: 3000 })
+ *  const requestHandle = reqest('GET http://www.xxx.com',{param:1}).success(()=>{}).error(()=>{})
  */
 
 const noop = () => {};
+const isEroor = e => Object.prototype.toString.call(e) === '[object Error]';
 let globalCallback = {};
-let globalConfig = {
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8'
-  }
-};
-const config = ({ callbacks = {}, configs = {} }) => {
-  Object.keys(callbacks).forEach(key => {
-    const callback = callbacks[key];
-    if (typeof callback === 'function') {
-      globalCallback[key] = callbacks[key];
+let globalConfigs = {};
+
+const globalCallbackNames = [
+  'onStart',
+  'onComplete',
+  'onSuccess',
+  'onError',
+  'onSuccessFilter'
+];
+const globalConfig = (gconfig = {}) => {
+  Object.keys(gconfig).forEach(key => {
+    const config = gconfig[key];
+    if (globalCallbackNames.indexOf(key) > 0) {
+      if (typeof config === 'function') {
+        globalCallback[key] = config;
+      } else {
+        throw new Error(`The callback ${key} must be a function`);
+      }
     } else {
-      throw new Error(`The callback ${key} must be a function`);
-    }
-  });
-  Object.keys(configs).forEach(key => {
-    globalConfig[key] = configs[key];
-    if (key === 'headers') {
-      globalConfig[key] = { ...globalConfig[key], ...configs[key] };
+      globalConfigs[key] = config;
+      if (key === 'headers') {
+        globalConfigs[key] = { ...globalConfigs[key], ...gconfig[key] };
+      }
     }
   });
 };
 
-const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
+const createRequest = ({ headers = {}, credentials, timeout, type } = {}) => {
   const {
     onStart = noop,
     onComplete = noop,
@@ -40,15 +54,15 @@ const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
     onError = noop,
     onSuccessFilter = result => result
   } = globalCallback;
-  timeout = timeout || globalConfig.timeout;
-  const assignHeaders = globalConfig.headers
+  timeout = timeout || globalConfigs.timeout;
+  const assignHeaders = globalConfigs.headers
     ? {
-        ...globalConfig.headers,
+        ...globalConfigs.headers,
         ...headers
       }
     : headers;
   const options = {
-    ...globalConfig,
+    ...globalConfigs,
     headers: assignHeaders
   };
   if (credentials) {
@@ -59,9 +73,9 @@ const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
       ? urlWithMethod.split(/\s+/)
       : ['GET', urlWithMethod];
 
-    let assignBody = globalConfig.body
+    let assignBody = globalConfigs.body
       ? {
-          ...globalConfig.body,
+          ...globalConfigs.body,
           ...params
         }
       : params;
@@ -85,10 +99,7 @@ const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
               result => {
                 const filterResult = onSuccessFilter(result);
                 const headers = response.headers;
-                if (
-                  Object.prototype.toString.call(filterResult) ===
-                  '[object Error]'
-                ) {
+                if (isEroor(filterResult)) {
                   onError(filterResult);
                   onComplete(filterResult);
                   reject(filterResult);
@@ -139,10 +150,10 @@ const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
     requestPromise.complete = fn => {
       fn = typeof fn === 'function' ? fn : noop;
       promise.then(
-        (result: Object) => {
+        result => {
           fn(null, result);
         },
-        (error: Error) => {
+        error => {
           fn(error);
         }
       );
@@ -158,8 +169,11 @@ const requestConfig = ({ headers = {}, credentials } = {}, timeout) => {
   };
 };
 
-export { fetch, config };
-export default requestConfig;
+export { fetch, globalConfig };
+
+const request = createRequest();
+request.withOption = createRequest;
+export default request;
 
 function abortablePromise(fetchPromise) {
   let abortFn = null;
