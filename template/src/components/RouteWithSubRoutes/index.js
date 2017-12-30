@@ -1,3 +1,3 @@
-import RouteWithSubRoutes from './RouteWithSubRoutes';
+import RouteWithSubRoutes from './RouteWithSubRoutes'
 
-export default RouteWithSubRoutes;
+export default RouteWithSubRoutes

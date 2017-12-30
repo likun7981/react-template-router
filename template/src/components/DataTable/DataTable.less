@@ -1,0 +1,92 @@
+@preCls: antdex-editable;
+.@{preCls} {
+  .ant-table-thead > tr > th {
+    padding-left: 16px !important;
+    &.ant-table-selection-column {
+      padding-left: 8px !important;
+    }
+  }
+  .ant-checkbox-input {
+    z-index: 0 !important;
+  }
+  .ant-table-body-outer {
+    overflow: hidden;
+  }
+  .ant-input-affix-wrapper .ant-input-prefix,
+  .ant-input-affix-wrapper .ant-input-suffix {
+    z-index: 0;
+  }
+  .anticon-edit,
+  .anticon-close,
+  .anticon-check {
+    cursor: pointer;
+    &:hover {
+      color: #108ee9;
+    }
+  }
+  &-cell-edit-wrapper,
+  &-cell-text-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-plain-text,
+  &-cell-text-wrapper {
+    padding-left: 8px;
+  }
+
+  &-cell-text-wrapper {
+    .@{preCls}-text {
+      display: block;
+      flex-grow: 1;
+    }
+    &:hover .@{preCls}-cell-icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &-cell-edit-wrapper {
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+
+  &-cell-single-edit-wrapper {
+    .ant-form-item {
+      flex-grow: 1;
+    }
+  }
+
+  &-cell-icon,
+  &-cell-text-wrapper,
+  &-cell-edit-wrapper {
+    line-height: 32px;
+  }
+
+  &-cell-icon {
+    width: 20px;
+    display: none;
+  }
+
+  &-cell-icon-check-wrapper {
+    text-align: center;
+    letter-spacing: 2px;
+    width: 30px;
+  }
+
+  &-cell-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  &-break-popover {
+    .ant-popover-inner-content {
+      word-break: break-all;
+      max-height: 200px;
+      overflow: auto;
+    }
+  }
+}

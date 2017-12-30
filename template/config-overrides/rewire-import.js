@@ -1,9 +1,9 @@
-const { injectBabelPlugin } = require('react-app-rewired');
+const { injectBabelPlugin } = require('react-rewired-scripts')
 
 module.exports = (config, env) => {
   config = injectBabelPlugin(
     ['import', { libraryName: 'antd', style: true }],
     config
-  );
-  return config;
-};
+  )
+  return config
+}

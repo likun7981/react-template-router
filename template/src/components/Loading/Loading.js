@@ -1,1 +1,1 @@
-export default () => '正在加载中...';
+export default () => '正在加载中...'

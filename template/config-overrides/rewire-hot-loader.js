@@ -1,9 +1,8 @@
+import { getBabelLoader } from 'react-rewired-scripts'
 
-function rewireHotLoader(config, env) {
-  if (env === 'development') {
-    config.entry.unshift(require.resolve('react-hot-loader/patch'));
-  }
-  return config;
+module.exports= function rewireHotLoader (config, env) {
+  const babelLoader = getBabelLoader(config.module.rules)
+  babelLoader.options.plugins = ['react-hot-loader/babel']
+  config.entry.unshift(require.resolve('react-hot-loader/patch'))
+  return config
 }
-
-module.exports = rewireHotLoader;

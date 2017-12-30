@@ -1,25 +1,31 @@
-import loadBundle from 'utils/load-bundle';
-import Other, { Increase } from './Other';
+import NotFound from 'components/NotFound'
+import loadBundle from 'utils/loadBundle'
+import injectReducers from 'utils/routeInjectReducers'
 
-import Home from './Home';
+import { Increase } from './other'
+import Home from './home'
 
 const routeConfig = store => [
   {
     path: '/',
     component: loadBundle(Home),
-    exact: true
+    exact: true,
   },
   {
     path: '/other',
-    component: Other(store),
+    component: loadBundle(injectReducers(store, 'other')),
     routes: [
       {
         path: '/other',
         exact: true,
-        component: loadBundle(Increase)
-      }
-    ]
-  }
-];
+        component: loadBundle(Increase),
+      },
+    ],
+  },
+  {
+    path: '*',
+    component: NotFound,
+  },
+]
 
-export default routeConfig;
+export default routeConfig

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'antd';
+import React from 'react'
+import { Button } from 'antd'
 
 export const Increase = props => {
   return (
@@ -9,10 +9,10 @@ export const Increase = props => {
         Increment
       </Button>
       <Button className="btn btn-default" onClick={props.doubleAsync}>
-        Double (Async)
+        Double (Async)1
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default Increase;
+export default Increase

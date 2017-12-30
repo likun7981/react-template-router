@@ -1,1 +1,2 @@
-export default () => import('./components/Intro');
+
+export default () => import('./components/Intro')

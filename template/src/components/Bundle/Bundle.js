@@ -4,71 +4,71 @@
  * @description: split code with router;
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Animate from 'rc-animate';
-import Loading from 'components/Loading';
-import './Bundle.less';
+import React from 'react'
+import PropTypes from 'prop-types'
+import Animate from 'rc-animate'
+import Loading from 'components/Loading'
+import './Bundle.less'
 
 class Bundle extends React.Component {
   static propTypes = {
     load: PropTypes.func.isRequired,
     animate: PropTypes.bool,
-    loadingElement: PropTypes.node
-  };
+    loadingElement: PropTypes.node,
+  }
   state = {
     WrapperComponent: null,
     errorMsg: false,
-    errorCode: false
-  };
-
-  componentWillMount() {
-    this.load(this.props);
+    errorCode: false,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (module.hot) {
-      setImmediate(() => {
-        this.load(nextProps);
-      });
-    }
+  componentWillMount () {
+    this.load(this.props)
   }
 
-  load(props) {
-    props.load().then(
+  componentWillReceiveProps (nextProps) {
+    // if (module.hot && this.props.load !== nextProps.load) {
+    //   setImmediate(() => {
+    //     this.load(nextProps)
+    //   })
+    // }
+  }
+
+  load = props => {
+    props.load(props).then(
       mod => {
         this.setState({
-          WrapperComponent: mod.default ? mod.default : mod,
-          errorMsg: false
-        });
+          WrapperComponent: mod.default || mod,
+          errorMsg: false,
+        })
       },
       error => {
         this.setState({
           errorMsg: error.message || error,
-          errorCode: error.code
-        });
+          errorCode: error.code,
+        })
       }
-    );
+    )
   }
 
-  render() {
-    const { WrapperComponent, errorMsg, errorCode } = this.state;
+  render () {
+    const { WrapperComponent, errorMsg, errorCode } = this.state
     const {
       animate = true,
       loadingElement,
       ...wrapperComponentProps
-    } = this.props;
+    } = this.props
     if (errorCode === '400') {
-      return null;
+      return null
     }
     if (errorMsg) {
-      return errorMsg;
+      return errorMsg
     }
     if (!WrapperComponent) {
-      return loadingElement || <Loading />;
+      return loadingElement || <Loading />
     }
     if (!animate) {
-      return <WrapperComponent {...wrapperComponentProps} />;
+      return <WrapperComponent {...wrapperComponentProps} />
     }
     return (
       <Animate
@@ -76,13 +76,13 @@ class Bundle extends React.Component {
         transitionAppear
         transitionName={{
           appear: 'animate-appear',
-          appearActive: 'animate-appear-active'
+          appearActive: 'animate-appear-active',
         }}
       >
         <WrapperComponent {...wrapperComponentProps} key="bundle" />
       </Animate>
-    );
+    )
   }
 }
 
-export default Bundle;
+export default Bundle

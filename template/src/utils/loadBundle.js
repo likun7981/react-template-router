@@ -1,5 +1,5 @@
-import React from 'react';
-import Bundle from 'components/Bundle';
+import React from 'react'
+import Bundle from 'components/Bundle'
 
 export default (loadfn, config = {}) => props => (
   <Bundle
@@ -8,4 +8,4 @@ export default (loadfn, config = {}) => props => (
     animate={config.animate}
     loadingElement={config.loadingElement}
   />
-);
+)

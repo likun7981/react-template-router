@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import './Sider.less';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import './Sider.less'
 
 export default () => (
   <div className="sider-container">
@@ -12,4 +12,4 @@ export default () => (
       Other
     </NavLink>
   </div>
-);
+)

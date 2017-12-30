@@ -1,3 +1,3 @@
-import Bundle from './Bundle';
+import Bundle from './Bundle'
 
-export default Bundle;
+export default Bundle

@@ -1,22 +1,17 @@
-const rewireLess = require('react-app-rewire-less');
-const rewireOptimize = require('react-app-rewire-optimize');
-const rewireHost = require('react-app-rewire-host');
-const rewireDll = require('./rewire-dll');
-const rewireAlias = require('./rewire-alias');
-const rewireAntd = require('./rewire-antd');
-const rewireHotLoader = require('./rewire-hot-loader');
+const { compose } = require('react-rewired-scripts')
+const rewireLess = require('react-rewire-less')
 
-module.exports = function(config, env) {
-  config = rewireAlias(config);
-  config = rewireLess(config, env);
-  config = rewireDll(config, env);
-  config = rewireOptimize(config, env);
-  config = rewireAntd(config, env);
-  config = rewireHost(config, env, {
+const rewireHost = require('./rewire-host')
+const rewireImport = require('./rewire-import')
+const rewireHotLoader = require('./rewire-hot-loader')
+
+export default compose(
+  rewireLess,
+  rewireHotLoader,
+  rewireImport,
+  rewireHost({
     dev: 'http://example.dev.com',
-    test: 'http://example.test.com',
-    pro: 'http://example.pro.com'
-  });
-  config = rewireHotLoader(config, env);
-  return config;
-};
+    test: 'http://example.test1111.com',
+    pro: 'http://example.pro.com',
+  })
+)

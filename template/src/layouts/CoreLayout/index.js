@@ -1,1 +1,1 @@
-export default () => import('./CoreLayout');
+export default () => import('./CoreLayout')

@@ -1,19 +1,17 @@
-import { applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { routerReducer } from 'react-router-redux';
-import createStore from './createInjectableStore';
+import { applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import { routerReducer } from 'react-router-redux'
+import createStore from './createInjectableStore'
 
 const createFinalStore = (initialState, middlewares) => {
-  const middleware = [thunk].concat(
-    middlewares
-  );
+  const middleware = [thunk].concat(middlewares)
 
-  const enhancers = [];
+  const enhancers = []
 
   if (process.env.NODE_ENV === 'development') {
-    const devToolsExtension = window.devToolsExtension;
+    const devToolsExtension = window.devToolsExtension
     if (typeof devToolsExtension === 'function') {
-      enhancers.push(devToolsExtension());
+      enhancers.push(devToolsExtension())
     }
   }
 
@@ -21,11 +19,11 @@ const createFinalStore = (initialState, middlewares) => {
     initialState,
     compose(applyMiddleware(...middleware), ...enhancers),
     {
-      router: routerReducer
+      router: routerReducer,
     }
-  );
+  )
 
-  return store;
-};
+  return store
+}
 
-export default createFinalStore;
+export default createFinalStore
