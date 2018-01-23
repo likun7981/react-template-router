@@ -4,5 +4,5 @@ const rewireConfig = require('react-rewired-scripts/lib/config-overrides')
 
 module.exports = {
   webpackConfig: rewireConfig.webpack(config),
-  components: 'src/components/**/!(index).{js,jsx,ts,tsx}',
+  components: 'src/components/**/[A-Z]*.js',
 }

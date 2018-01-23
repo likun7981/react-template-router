@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Table, Icon } from 'antd'
+import { Form, Table as AntdTable, Icon } from 'antd'
 import request from 'utils/fetch'
 import pagination from './pagination'
-import AnimteBody from './AnimateBody'
+import AnimteBody from './animateBody'
 import './DataTable.less'
 
 const noop = message => result => {
@@ -14,17 +14,23 @@ const noop = message => result => {
 class DataTable extends React.Component {
   static propTypes = {
     fetch: PropTypes.shape({
+      /** 请求的接口 */
       url: PropTypes.string.isRequired,
+      /** 额外需要传递的请求参数 */
       extraParams: PropTypes.object,
+      /**
+       * 函数第一个参数为原始返回的请求
+       * 函数需要返回有total 和 dataSource两个属性的对象
+       */
       mapDataSource: PropTypes.func,
     }),
+    /** 参照[Pagination](http://2x.ant.design/components/pagination-cn/#API)组件 */
     pagination: PropTypes.object,
-    Table: PropTypes.object,
-    animate: PropTypes.object,
+    /** 是否需要动画 */
+    animate: PropTypes.bool,
   }
   static defaultProps = {
     pagination: pagination,
-    Table: Table,
     animate: false,
   }
   state = {
@@ -103,10 +109,10 @@ class DataTable extends React.Component {
     } = this.state
     const {
       fetch,
-      pagination: pg,
-      Table,
+      Table = AntdTable,
       animate,
       children,
+      columns,
       ...otherProps
     } = this.props
     const getBodyWrapper = animate
@@ -130,10 +136,13 @@ class DataTable extends React.Component {
         </span>
       )
     }
+    const finalColumns =
+      typeof columns === 'function' ? columns(this.fetch) : columns
     return (
       <Table
         loading={loading}
         {...otherProps}
+        columns={finalColumns}
         locale={{
           emptyText: getEmptyText,
         }}

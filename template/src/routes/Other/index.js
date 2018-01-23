@@ -1,2 +1,9 @@
+import loadBundle from 'utils/loadBundle'
 
-export const Increase = () => import('./containers/Increase')
+const OtherAsync = loadBundle(() => import('./containers/Increase'))
+
+export default {
+  path: '/other',
+  exact: true,
+  component: OtherAsync,
+}

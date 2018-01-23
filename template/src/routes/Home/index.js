@@ -1,2 +1,9 @@
+import loadBundle from 'utils/loadBundle'
 
-export default () => import('./components/Intro')
+const HomeAsync = loadBundle(() => import('./components/Intro'))
+
+export default {
+  path: '/',
+  component: HomeAsync,
+  exact: true,
+}

@@ -1,1 +1,3 @@
-export default () => import('./CoreLayout')
+import CoreLayout from './CoreLayout'
+
+export default CoreLayout

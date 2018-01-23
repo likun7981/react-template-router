@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import { Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { hot } from 'react-hot-loader'
+import { ConnectedRouter as Router } from 'react-router-redux'
+import history from 'utils/history'
+import CoreLayout from 'layouts/CoreLayout'
+import store from 'configureStore'
+import routes from 'routes'
 
 class App extends Component {
   shouldComponentUpdate () {
     return false
   }
   render () {
-    const { routes, store, history } = this.props
     return (
       <Provider store={store}>
-        <Router history={history}>{routes}</Router>
+        <Router history={history}>
+          <CoreLayout routes={routes} />
+        </Router>
       </Provider>
     )
   }
 }
 
-export default App
+export default hot(module)(App)

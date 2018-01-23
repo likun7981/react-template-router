@@ -1,17 +1,16 @@
-const { compose } = require('react-rewired-scripts')
-const rewireLess = require('react-rewire-less')
-
-const rewireHost = require('./rewire-host')
-const rewireImport = require('./rewire-import')
-const rewireHotLoader = require('./rewire-hot-loader')
+import { compose, injectBabelPlugins } from 'react-rewired-scripts'
+import rewireLess from 'react-rewire-less'
+import rewireEnv from 'react-rewire-env'
 
 export default compose(
   rewireLess,
-  rewireHotLoader,
-  rewireImport,
-  rewireHost({
+  injectBabelPlugins(
+    ['import', { libraryName: 'antd', style: true }],
+    'react-hot-loader/babel'
+  ),
+  rewireEnv({
     dev: 'http://example.dev.com',
-    test: 'http://example.test1111.com',
-    pro: 'http://example.pro.com',
+    test: 'http://example.test.com',
+    prod: 'http://example.pro.com',
   })
 )

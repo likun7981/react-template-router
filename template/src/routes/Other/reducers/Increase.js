@@ -6,7 +6,7 @@ const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
  * @param  {Number} value [description]
  * @return {[type]}       [description]
  */
-const increaseBase = (value: number = 1) => ({
+const increaseBase = (value = 1) => ({
   type: COUNTER_INCREMENT,
   payload: value,
 })
@@ -16,7 +16,7 @@ const increaseBase = (value: number = 1) => ({
  */
 const doubleAsync = () => (dispatch, getState) => {
   setTimeout(() => {
-    dispatch(increaseBase(getState().increaseResult))
+    dispatch(increaseBase(getState().increase))
   }, 1200)
 }
 const increase = increaseBase
