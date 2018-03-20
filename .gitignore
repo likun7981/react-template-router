@@ -60,4 +60,6 @@ template/build
 
 # lock
 package-lock.json
+package.json
+yarn.lock
 

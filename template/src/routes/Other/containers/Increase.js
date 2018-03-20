@@ -1,8 +1,7 @@
 import { Component } from 'react'
-// import connect from 'utils/connect'
 import { connect } from 'react-redux'
-import { hot } from 'react-hot-loader'
-import { actionCreatorMaps } from '../reducers/increase'
+import { compose } from 'redux'
+import { increase, doubleAsync } from '../reducers/increase'
 import Increase from '../components/Increase'
 
 class IncreaseContainer extends Component {
@@ -31,12 +30,18 @@ class IncreaseContainer extends Component {
   }
 }
 
-const mapDispatchToProps = actionCreatorMaps
+const mapDispatchToProps = {
+  increase,
+  doubleAsync,
+}
 
 const mapStateToProps = state => ({
   increaseResult: state.increase,
 })
 
-export default hot(module)(
-  connect(mapStateToProps, mapDispatchToProps)(IncreaseContainer)
+const enhance = compose(
+  // hot(module),
+  connect(mapStateToProps, mapDispatchToProps)
 )
+
+export default enhance(IncreaseContainer)

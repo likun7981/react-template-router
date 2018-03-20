@@ -1,35 +1,17 @@
-import createReducers from 'utils/creators'
+import { handleActions, createAction } from 'redux-actions'
 
-const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
-/**
- * [incrementBase description]
- * @param  {Number} value [description]
- * @return {[type]}       [description]
- */
-const increaseBase = (value = 1) => ({
-  type: COUNTER_INCREMENT,
-  payload: value,
-})
+export const increase = createAction('@other/increate', (count = 1) => count)
 
-/**
- * actions for this reducer
- */
-const doubleAsync = () => (dispatch, getState) => {
+export const doubleAsync = () => (dispatch, getState) => {
   setTimeout(() => {
-    dispatch(increaseBase(getState().increase))
+    dispatch(increase(getState().increase))
   }, 1200)
-}
-const increase = increaseBase
-
-export const actionCreatorMaps = {
-  increase,
-  doubleAsync,
 }
 
 const reducerMaps = {
-  [COUNTER_INCREMENT]: (state, action) => state + action.payload,
+  [increase]: (state, action) => state + action.payload,
 }
 
 const initState = 0
 
-export default createReducers(reducerMaps, initState)
+export default handleActions(reducerMaps, initState)

@@ -6,7 +6,7 @@ export default () => (
   <Alert
     message={
       <div>
-        To get started, edit1
+        To get started, edit
         <code> src/Routes/Home/Intro.js {process.env.REACT_APP_HOST}</code> and
         save to reload.
       </div>

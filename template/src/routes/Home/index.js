@@ -1,6 +1,6 @@
-import loadBundle from 'utils/loadBundle'
+import loadable from 'react-rewire-hot-loader/lib/loadable'
 
-const HomeAsync = loadBundle(() => import('./components/Intro'))
+const HomeAsync = loadable(() => import('./components/Intro'))
 
 export default {
   path: '/',

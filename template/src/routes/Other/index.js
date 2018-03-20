@@ -1,6 +1,6 @@
-import loadBundle from 'utils/loadBundle'
+import loadable from 'react-rewire-hot-loader/lib/loadable'
 
-const OtherAsync = loadBundle(() => import('./containers/Increase'))
+const OtherAsync = loadable(() => import('./containers/Increase'))
 
 export default {
   path: '/other',

@@ -19,13 +19,11 @@ const configureStore = initialState => {
     initialState,
     compose(applyMiddleware(...middleware), ...enhancers)
   )
-
   // https://github.com/reactjs/redux/releases/tag/v2.0.0
-  // reducer change should refresh
   if (module.hot) {
     module.hot.accept('reducers', () => {
       const nextRootReducer = require('reducers').default
-      store.replaceReducer(nextRootReducer)
+      store.replaceReducer(combineReducers(nextRootReducer))
     })
   }
 
