@@ -4,7 +4,7 @@ export const increase = createAction('@other/increate', (count = 1) => count)
 
 export const doubleAsync = () => (dispatch, getState) => {
   setTimeout(() => {
-    dispatch(increase(getState().increase))
+    dispatch(increase(getState().count))
   }, 1200)
 }
 

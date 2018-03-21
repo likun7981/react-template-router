@@ -36,12 +36,9 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = state => ({
-  increaseResult: state.increase,
+  increaseResult: state.count,
 })
 
-const enhance = compose(
-  // hot(module),
-  connect(mapStateToProps, mapDispatchToProps)
-)
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps))
 
 export default enhance(IncreaseContainer)
