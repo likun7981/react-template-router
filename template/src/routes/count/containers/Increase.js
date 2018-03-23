@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { increase, doubleAsync } from '../reducers/increase'
+import { increase, doubleAsync } from '../reducers/count'
 import Increase from '../components/Increase'
 
 class IncreaseContainer extends Component {
